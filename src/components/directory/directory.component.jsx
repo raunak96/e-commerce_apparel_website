@@ -11,7 +11,7 @@ export default class Directory extends React.Component {
                     title: "hats",
                     imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
                     id: 1,
-                    linkUrl: "shop/hats",
+                    linkUrl: "hats",
                 },
                 {
                     title: "jackets",
@@ -45,8 +45,8 @@ export default class Directory extends React.Component {
     render() {
         return (
             <div className="directory-menu">
-                {this.state.categories.map(({ title, imageUrl, id,size }) => (
-                    <MenuItem key={id} title={title} imageUrl={imageUrl} size={size}/>))
+                {this.state.categories.map(({ id,...otherProperties }) => ( // ...otherProperties stores rest of the properies like title,imageUrl etc in it
+                    <MenuItem key={id} {...otherProperties}/>))  // {...otherProperties} equivalent to {title:title} {size:size} etc
                 }
             </div>
         );
