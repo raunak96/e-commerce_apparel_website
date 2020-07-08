@@ -57,7 +57,7 @@ export default class SignUp extends React.Component {
                     <FormInput type="email" label="Email" name="email"required="required" onChange={this.handleChange} value={email}/>
                     <FormInput type="password" label="Password" name="password"required="required" onChange={this.handleChange} value={password}/>
                     <FormInput type="password" label="Confirm Password" name="confirmPassword"required="required" onChange={this.handleChange} value={confirmPassword}/>
-                    <CustomButton type="submit">Sign Up&nbsp;&nbsp;<i class="fa fa-lg fa-user-plus" aria-hidden="true"></i></CustomButton>
+                    <CustomButton type="submit">Sign Up&nbsp;&nbsp;<i className="fa fa-lg fa-user-plus" aria-hidden="true"></i></CustomButton>
                 </form>
             </div>
         )
