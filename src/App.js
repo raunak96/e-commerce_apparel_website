@@ -6,15 +6,11 @@ import ShopPage from "./pages/shop/shop.component";
 import AuthPage from "./pages/authPage/authPage.component";
 import Header from "./components/header/header.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import {connect} from 'react-redux';
+import { setCurrentUser } from "./redux/user/user.actions";
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentUser: null,
-        };
-    }
-
+    
     unSubscribeFromAuth = null; //its a method which will keep connection with auth of google provider from firebase to check if user signs in/out
 
     componentDidMount() {
@@ -24,15 +20,14 @@ class App extends React.Component {
 			if (userAuth) {
                 const userRef = await createUserProfileDocument(userAuth);
                 userRef.onSnapshot((userSnapshot) => {
-                    this.setState({
-                        currentUser: {
+                    this.props.setCurrentUser({
                             id: userSnapshot.id,
                             ...userSnapshot.data(),
-                        },
                     });
                 });
 			} 
-			else this.setState({ currentUser: userAuth }); 
+            else 
+                this.props.setCurrentUser(userAuth); 
         });
     }
     componentWillUnmount() {
@@ -41,7 +36,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Header currentUser={this.state.currentUser} />
+                <Header/>
                 <Switch>
                     <Route
                         exact={true}
@@ -60,4 +55,8 @@ class App extends React.Component {
     }
 }
 
-export default App;
+const mapDispatchToProps = dispatch=>({      // this basically makes a prop called setCurrentUser which in this case is a function which dipatches an action
+    setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null,mapDispatchToProps)(App);   
