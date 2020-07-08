@@ -8,6 +8,7 @@ const Header = ({currentUser}) => (
     <div className="header">
         <Link className="logo-container" to="/">
             <Logo className="logo"/>
+            <span className="logo-name">RAWN'S APPARELS</span>
         </Link>
         <div className="options">
             <Link to="/shop" className="option">SHOP</Link>
