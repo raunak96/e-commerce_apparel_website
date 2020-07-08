@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
-import "firebase/firestore";   //for database
-import "firebase/auth";        //for authentication
+import "firebase/firestore"; //for database
+import "firebase/auth"; //for authentication
 
 const config = {
     apiKey: "AIzaSyCA8Y38lDUOzDpoQxZY22_VIQoDzWqxbFA",
@@ -13,15 +13,44 @@ const config = {
     measurementId: "G-BKX0TFD1F5",
 };
 
+/*  Firestore(DB) is NOSQL DB which has data in the form of COLLECTIONS comprising of documents, where a document might also contain a collection and so on
+    When we query this db, we can get two types of results either reference to the returned data or data itself(which is called SNAPSHOT)
+*/
+// this func adds user when he/she logs in and already doesn't exist firestore(db) to be added to firestore i.e firebase database
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if (!userAuth) return;
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`); //this is the user Reference
+    const userSnapshot = await userRef.get(); // this is the user data which user reference refers to
+
+    // if user not in db add it to it
+    if (!userSnapshot.exists) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date(); 
+
+        try {
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            })
+        } catch (error) {
+            console.log("User could not be added to db",error.message);
+        }
+    }
+    return userRef;
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
-export const firestore=firebase.firestore();
+export const firestore = firebase.firestore();
 
 // Setting up Google Sign in with Firebase
-const provider= new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({prompt:"select_account"});
+const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
 
-export const signInWithGoogle=()=>auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;

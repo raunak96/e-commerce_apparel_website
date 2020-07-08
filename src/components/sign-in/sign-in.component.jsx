@@ -26,7 +26,7 @@ export default class SignIn extends React.Component {
     render(){
         return (
             <div className="sign-in">
-                <h2>I already have an account</h2>
+                <h2 className="title">I already have an account</h2>
                 <span>Sign in with your e-mail and password</span>
 
                 <form onSubmit={this.handleSubmit}>
@@ -35,9 +35,9 @@ export default class SignIn extends React.Component {
                     <FormInput type="password" label="Password" name="password"required="required" onChange={this.handleChange} value={this.state.password}/>
 
                     <div className="buttons">
-                        <CustomButton type="submit">Sign in</CustomButton>
+                        <CustomButton type="submit">Sign in&nbsp;&nbsp;<i class="fa fa-lg fa-sign-in" aria-hidden="true"></i></CustomButton>
                         <CustomButton onClick={signInWithGoogle} isGoogleSignIn>Sign in with Google&nbsp;&nbsp;
-                            <i class="fa fa-lg fa-google" aria-hidden="true"></i>
+                            <i className="fa fa-lg fa-google" aria-hidden="true"></i>
                         </CustomButton>
                     </div>
                     
