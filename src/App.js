@@ -8,6 +8,8 @@ import Header from "./components/header/header.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import {connect} from 'react-redux';
 import { setCurrentUser } from "./redux/user/user.actions";
+import {createStructuredSelector} from 'reselect';
+import { selecCurrenttUser } from "./redux/user/user.selectors";
 
 class App extends React.Component {
     
@@ -47,12 +49,12 @@ class App extends React.Component {
     }
 }
 
-const mapStateToProps= ({user})=>({
-    currentUser: user.currentUser     //to get currentUser form redux store/reducer as prop called currentUser
-})
+const mapStateToProps= createStructuredSelector({
+    currentUser:  selecCurrenttUser              //to get currentUser form redux store/reducer after slicing from root reducer as prop called currentUser
+});
 
 const mapDispatchToProps = dispatch=>({      // this basically makes a prop called setCurrentUser which in this case is a function which dipatches an action
     setCurrentUser: user => dispatch(setCurrentUser(user))
-})
+});
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);   
