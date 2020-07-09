@@ -9,8 +9,8 @@ const CollectionPreview = ({ title, items }) => (
             {
                 items
                     .filter((item,index)=>index<4)   //to limit items to 4 in preview
-                    .map(({id,...otherProperties}) => (                 // to map over this array which now has 4 items
-                        <CollectionItem key={id}  {...otherProperties}></CollectionItem>
+                    .map(item => (                 // to map over this array which now has 4 items
+                        <CollectionItem key={item.id}  item={item}></CollectionItem>
                 ))
             }
         </div>
