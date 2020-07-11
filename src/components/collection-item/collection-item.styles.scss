@@ -2,9 +2,8 @@
     width: 22vw;
     display: flex;
     flex-direction: column;
-    height: 350px;
+    height: 40vh;
     align-items: center;
-    position: relative;
 
     .image {
         width: 100%;
@@ -12,15 +11,18 @@
         background-size: cover;
         background-position: center;
         margin-bottom: 5px;
+        position: relative;
+        display: flex;
+        justify-content: center;
     }
 
-    .custom-button {
-        width: 80%;
-        opacity: 0.7;
-        position: absolute;
-        top: 75%;
-        display: none;
-    }
+        .custom-button {
+            width: 80%;
+            opacity: 0.7;
+            position: absolute;
+            top: 75%;
+            display: none;
+        }
     &:hover {
         .image {
             opacity: 0.8;
