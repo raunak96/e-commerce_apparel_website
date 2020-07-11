@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import CheckoutItem from '../../components/checkout-item/checkout-item.components';
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
 
-const CheckoutPage = ({cartItems,cartTotalPrice})=>(
+const CheckoutPage = ({ cartItems, cartTotalPrice }) => (
     <div className="checkout-page">
         <div className="checkout-header">
             <div className="header-block">
@@ -19,22 +19,24 @@ const CheckoutPage = ({cartItems,cartTotalPrice})=>(
                 <span className="heading">Quantity</span>
             </div>
             <div className="header-block">
-                <span className="heading">Price</span>
+                <span className="heading">Price (in ₹)</span>
             </div>
             <div className="header-block">
                 <span className="heading">Remove</span>
             </div>
         </div>
-        {
-            cartItems.map(cartItem=>(
-                <CheckoutItem key={cartItem.id} cartItem={cartItem}/>
-            ))
-        }
+        {cartItems.map((cartItem) => (
+            <CheckoutItem key={cartItem.id} cartItem={cartItem} />
+        ))}
         <div className="total">
-            <span>TOTAL: ${cartTotalPrice}</span>
+            <span>TOTAL: ₹ {cartTotalPrice}</span>
         </div>
-        <div className="test-warning">*Please Use the following card for payments*<br/>4242 4242 4242 4242 - Exp: Any future date - CVV: Any 3 digit no</div>
-        <StripeCheckoutButton price={cartTotalPrice}/>
+        <div className="test-warning">
+            *Please Use the following card for payments*
+            <br />
+            4242 4242 4242 4242 - Exp: Any future date - CVV: Any 3 digit no
+        </div>
+        <StripeCheckoutButton price={cartTotalPrice} />
     </div>
 );
 
