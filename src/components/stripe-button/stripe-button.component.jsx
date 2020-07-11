@@ -6,6 +6,7 @@ import { clearCart } from "../../redux/cart/cart.actions";
 const StripeCheckoutButton = ({ price,clearEntireCart }) => {
     const priceInPaise = price * 100;
     const publishableKey = process.env.REACT_APP_PUBLISHABLE_KEY;
+    console.log(publishableKey)
     
     const onToken=(token)=>{
         console.log(token);
