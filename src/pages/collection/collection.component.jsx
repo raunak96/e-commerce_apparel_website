@@ -18,9 +18,9 @@ const CollectionPage = ({ collection }) => {
     );
 };
 
-const mapStateToProps = (state, ownProps) => ({
-    // the 2nd param is the props of this component i.e collection Component
+const mapStateToProps = (state, ownProps) => ({   // the 2nd param is the props of this component i.e collection Component
+
     collection: selectCollection(ownProps.match.params.collectionId)(state), // state is always required for selector, since it already had other param
-}); // , we passed state in this manner unlike other selector where state was the only param
+});                                                                         // , we passed state in this manner unlike other selector where state was the only param
 
 export default connect(mapStateToProps)(CollectionPage);
