@@ -15,7 +15,7 @@ const CollectionItem = ({item,addItem}) => {
                     backgroundImage: `url(${imageUrl})`,
                 }}
             >
-                <CustomButton inverted onClick={() => addItem(item)}>
+                <CustomButton className="custom-button" inverted onClick={() => addItem(item)}>
                     Add to cart
                 </CustomButton>
             </div>

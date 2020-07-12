@@ -59,15 +59,30 @@ export const addCollectionAndDocumentsForShopCollections = async (collectionName
     objectsToAdd.forEach(object=>{
         const { items, title } = object;
         const newDocRef= collectionRef.doc();  // generate a doc with unique id
-        const newCollection= newDocRef.collection(title);
-        items.forEach(item=>{
-            const newDocRef1= newCollection.doc();
-            const {name,imageUrl,price} = item;
-            batch.set(newDocRef1,{name,imageUrl,price}); 
-        });
-        batch.set(newDocRef,{title});
+        batch.set(newDocRef,{title,items});
     });
     return await batch.commit();
 };
+
+export const getShopData =collectionSnapshots=>{
+
+    const transformedCollections=collectionSnapshots.docs.map(doc=>{
+
+        const {title,items}=doc.data();
+        const id=doc.id;
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id,
+            items,
+            title,
+        };
+        
+    });
+
+    return transformedCollections.reduce((collections,collection)=>{
+        collections[collection.title.toLowerCase()]=collection;
+        return collections;
+    },{});
+}
 
 export default firebase;

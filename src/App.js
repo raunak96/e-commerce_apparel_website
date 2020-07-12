@@ -8,12 +8,12 @@ import AuthPage from "./pages/authPage/authPage.component";
 import checkoutPage from "./pages/checkoutPage/checkout.component";
 
 import Header from "./components/header/header.component";
-import { auth, createUserProfileDocument ,addCollectionAndDocumentsForShopCollections} from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import {connect} from 'react-redux';
 import { setCurrentUser } from "./redux/user/user.actions";
 import {createStructuredSelector} from 'reselect';
 import { selectCurrentUser } from "./redux/user/user.selectors";
-import {selectCollectionsForPreview} from "./redux/shop/shop.selectors";
+import { selectCollectionsForPreview } from "./redux/shop/shop.selectors";
 
 class App extends React.Component {
     
@@ -36,12 +36,12 @@ class App extends React.Component {
                 this.props.setCurrentUser(userAuth); 
 
             // Below function to add Shop Collections Array to firestore from front-end Redux store
-            addCollectionAndDocumentsForShopCollections('collections',this.props.collectionsArray.map(({title,items}) => ({title,items })));
+            // addCollectionAndDocumentsForShopCollections('collections',this.props.collectionsArray.map(({title,items}) => ({title,items })));
             
         });
     }
     componentWillUnmount() {
-        this.unSubscribeFromAuth.unsubscribe(); //when component unmounts, no need to keep connection open to auth to fetch user state, hence unSubscribe
+        this.unSubscribeFromAuth(); //when component unmounts, no need to keep connection open to auth to fetch user state, hence unSubscribe
     }
     render() {
         return (
