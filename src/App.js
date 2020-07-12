@@ -8,11 +8,12 @@ import AuthPage from "./pages/authPage/authPage.component";
 import checkoutPage from "./pages/checkoutPage/checkout.component";
 
 import Header from "./components/header/header.component";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument ,addCollectionAndDocumentsForShopCollections} from "./firebase/firebase.utils";
 import {connect} from 'react-redux';
 import { setCurrentUser } from "./redux/user/user.actions";
 import {createStructuredSelector} from 'reselect';
-import { selecCurrenttUser } from "./redux/user/user.selectors";
+import { selectCurrentUser } from "./redux/user/user.selectors";
+import {selectCollectionsForPreview} from "./redux/shop/shop.selectors";
 
 class App extends React.Component {
     
@@ -33,6 +34,10 @@ class App extends React.Component {
 			} 
             else 
                 this.props.setCurrentUser(userAuth); 
+
+            // Below function to add Shop Collections Array to firestore from front-end Redux store
+            addCollectionAndDocumentsForShopCollections('collections',this.props.collectionsArray.map(({title,items}) => ({title,items })));
+            
         });
     }
     componentWillUnmount() {
@@ -54,7 +59,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps= createStructuredSelector({
-    currentUser:  selecCurrenttUser              //to get currentUser form redux store/reducer after slicing from root reducer as prop called currentUser
+    currentUser:  selectCurrentUser,              //to get currentUser form redux store/reducer after slicing from root reducer as prop called currentUser
+    collectionsArray: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = dispatch=>({      // this basically makes a prop called setCurrentUser which in this case is a function which dipatches an action

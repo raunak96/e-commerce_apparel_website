@@ -53,4 +53,21 @@ provider.setCustomParameters({ prompt: "select_account" });
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
+export const addCollectionAndDocumentsForShopCollections = async (collectionName,objectsToAdd)=>{
+    const collectionRef= firestore.collection(collectionName);
+    const batch =firestore.batch();  // batch all queries together so that either all fail or pass
+    objectsToAdd.forEach(object=>{
+        const { items, title } = object;
+        const newDocRef= collectionRef.doc();  // generate a doc with unique id
+        const newCollection= newDocRef.collection(title);
+        items.forEach(item=>{
+            const newDocRef1= newCollection.doc();
+            const {name,imageUrl,price} = item;
+            batch.set(newDocRef1,{name,imageUrl,price}); 
+        });
+        batch.set(newDocRef,{title});
+    });
+    return await batch.commit();
+};
+
 export default firebase;

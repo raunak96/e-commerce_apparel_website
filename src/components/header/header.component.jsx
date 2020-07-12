@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
 import {createStructuredSelector} from "reselect";
-import { selecCurrenttUser } from "../../redux/user/user.selectors";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { selectCartHidden } from "../../redux/cart/cart.selectors";
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionContainer, LogoIconContainer,LogoNameContainer } from "./header.styles";
 
@@ -32,7 +32,7 @@ const Header = ({currentUser,cart_hidden}) => (
 
   //params - destructuring state to get currentUser option out of user in state, similarly for cart
 const mapStateToProps = createStructuredSelector({    //this state is the root reducer
-    currentUser : selecCurrenttUser,
+    currentUser : selectCurrentUser,
     cart_hidden : selectCartHidden
 });
 
