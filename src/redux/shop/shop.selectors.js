@@ -21,4 +21,9 @@ export const selectCollection = (collectionUrlParam) =>
 export const selectIsCollectionsFetching= createSelector(
     selectShop,
     (shop)=>shop.isFetching
+);
+
+export const selectIsCollectionsNull= createSelector(
+    selectShop,
+    shop=> !shop.collections  // returns true if collections is null 
 )
