@@ -17,15 +17,25 @@ class ShopPage extends React.Component {
 
     unsubscribeFromSnapshot=null;
     
-    componentDidMount() {
+    async componentDidMount() {
         const collectionRef= firestore.collection('collections');
         
-        collectionRef.onSnapshot(async snapshot=>{
+        const collectionSnapshot= await collectionRef.get();
+        const shopData = getShopData(collectionSnapshot);
+        this.props.updateCollection(shopData); // this means the shop data has been retrieved and update called for shop reducer
+        this.setState({ loading: false });
+
+        /*  OR use below code instead of .get()
+        
+        this.unsubscribeFromSnapshot= collectionRef.onSnapshot(async snapshot=>{
             const shopData= getShopData(snapshot);
             this.props.updateCollection(shopData); // this means the shop data has been retrieved and update called for shop reducer
             this.setState( { loading:false } );
+        }) 
 
-        })
+        We can use onSnapshot or normal get method like other NOSQL db's to get data..Advantage of onSnpashot is that it is an event listener following
+        Observable pattern and listens for changes(events) on Snapshot and returns the result continously unlike get which is 1-time only...SInce in this
+        case we need ShopData only once, we can use the get method */
     }
     
     render() {
