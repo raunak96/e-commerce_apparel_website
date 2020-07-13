@@ -10,5 +10,7 @@ In our code, since getting shopData from firestore is asynch and to make it reus
 # Current Changes
 
 Moved responsibility of HOC wrapping of Collection and CollectionsOverview Pages from Shop to above Components itself by making new Container files for the 2 components whose job is to render actual Component or Loading Spinner according to condition by wrapping to WithSpinner HOC.
-Now Shops page only role is to route to CollectionPage or CollectionsOverview Page according to route.
+Now Shop's page only role is to route to CollectionPage or CollectionsOverview Page according to route.
+
+This was done to ensure seperation of concerns as Job of rendering Loading Spinner or data if available for a component should be its own responsibility.
 
