@@ -64,6 +64,7 @@ export const addCollectionAndDocumentsForShopCollections = async (collectionName
     return await batch.commit();
 };
 
+// gets array of 'collections' document from firestore then return ot after converting it to an Object same form as in shop.data.js
 export const getShopData =collectionSnapshots=>{
 
     const transformedCollections=collectionSnapshots.docs.map(doc=>{

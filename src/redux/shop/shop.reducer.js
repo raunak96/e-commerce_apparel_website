@@ -1,15 +1,29 @@
 import ShopActionTypes from "./shop.types";
 
 const INITAL_STATE = {
-    collections : null 
+    collections : null,
+    isFetching : false,   // tells whether collection is being fetched from firestore
+    errorMessage: undefined
 };
 
 const shopReducer = (state=INITAL_STATE, action) => {
     switch (action.type) {
-        case ShopActionTypes.UPDATE_COLLECTIONS:
+        case ShopActionTypes.FETCH_COLLECTIONS_START:
             return {
                 ...state,
-                collections:action.payload
+                isFetching: true
+            }
+        case ShopActionTypes.FETCH_COLLECTIONS_SUCCESS:
+            return {
+                ...state,
+                collections:action.payload,
+                isFetching: false
+            }
+        case ShopActionTypes.FETCH_COLLECTIONS_FAILURE:
+            return{
+                ...state,
+                isFetching:false,
+                errorMessage: action.payload 
             }
         default:
             return state;
