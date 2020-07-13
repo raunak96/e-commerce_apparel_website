@@ -39,8 +39,7 @@ export const fetchCollectionsStartAsync=()=>{
         
         this.unsubscribeFromSnapshot= collectionRef.onSnapshot(async snapshot=>{
             const shopData= getShopData(snapshot);
-            this.props.updateCollection(shopData); // this means the shop data has been retrieved and update called for shop reducer
-            this.setState( { loading:false } );
+            ............
         }) 
 
         We can use onSnapshot or normal get method like other NOSQL db's to get data..Advantage of onSnpashot is that it is an event listener following
