@@ -48,11 +48,12 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 // Setting up Google Sign in with Firebase
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: "select_account" });
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider); // this opens Google Sign In pop-up and returns promise which if succeds returns UserRef
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
+// ADD SHOP-DATA TO FIREBASE
 export const addCollectionAndDocumentsForShopCollections = async (collectionName,objectsToAdd)=>{
     const collectionRef= firestore.collection(collectionName);
     const batch =firestore.batch();  // batch all queries together so that either all fail or pass
@@ -64,7 +65,7 @@ export const addCollectionAndDocumentsForShopCollections = async (collectionName
     return await batch.commit();
 };
 
-// gets array of 'collections' document from firestore then return ot after converting it to an Object same form as in shop.data.js
+// gets array of 'collections' document from firestore then return it after converting it to an Object same form as in shop.data.js
 export const getShopData =collectionSnapshots=>{
 
     const transformedCollections=collectionSnapshots.docs.map(doc=>{

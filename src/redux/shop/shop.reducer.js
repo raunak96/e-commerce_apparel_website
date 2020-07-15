@@ -8,7 +8,7 @@ const INITAL_STATE = {
 
 const shopReducer = (state=INITAL_STATE, action) => {
     switch (action.type) {
-        case ShopActionTypes.FETCH_COLLECTIONS_START:
+        case ShopActionTypes.FETCH_COLLECTIONS_START:   //there is no need for this as redux-saga middleware is listening for this action..just as precaution it is written
             return {
                 ...state,
                 isFetching: true
@@ -17,7 +17,8 @@ const shopReducer = (state=INITAL_STATE, action) => {
             return {
                 ...state,
                 collections:action.payload,
-                isFetching: false
+                isFetching: false,
+                errorMessage: null
             }
         case ShopActionTypes.FETCH_COLLECTIONS_FAILURE:
             return{

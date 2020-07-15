@@ -1,7 +1,8 @@
 import {all,call} from 'redux-saga/effects';
-import { fetchCollectionsStart } from './shop/shop.sagas';
+import { onFetchCollectionsStart } from './shop/shop.sagas';
+import UserSagas from './user/user.sagas';
 
 
 export default function* rootSaga(){
-    yield all([call(fetchCollectionsStart)]); // all tells saga middleware to run the sagas in the array in 'parallel' 
+    yield all([call(onFetchCollectionsStart),call(UserSagas)]); // all tells saga middleware to run the sagas in the array in 'parallel' 
 }

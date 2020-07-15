@@ -18,7 +18,7 @@ function* fetchCollectionsAsync(){
 }
 // yield basically allows saga-middleware to temporarily stop after said fn performed, and maybe cancel execution or do something else i.e middleware takes control
 
-export function* fetchCollectionsStart(){
+export function* onFetchCollectionsStart(){
 /*
     yield takeEvery(ShopActionTypes.FETCH_COLLECTIONS_START, fetchCollectionsAsync)   
 
