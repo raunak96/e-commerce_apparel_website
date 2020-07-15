@@ -11,10 +11,13 @@ import Header from "./components/header/header.component";
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import { selectCurrentUser } from "./redux/user/user.selectors";
-import { selectCollectionsForPreview } from "./redux/shop/shop.selectors";
+import { checkUserInSession } from "./redux/user/user.actions";
 
 class App extends React.Component {
-    
+    componentDidMount() {
+        const {checkUserInSession}=this.props;
+        checkUserInSession();
+    }
     render() {
         return (
             <div>
@@ -32,9 +35,10 @@ class App extends React.Component {
 
 const mapStateToProps= createStructuredSelector({
     currentUser:  selectCurrentUser,              //to get currentUser form redux store/reducer after slicing from root reducer as prop called currentUser
-    collectionsArray: selectCollectionsForPreview
 });
 
+const mapDispatchToProps= dispatch=>({
+    checkUserInSession:()=>dispatch(checkUserInSession())
+})
 
-
-export default connect(mapStateToProps)(App);   
+export default connect(mapStateToProps,mapDispatchToProps)(App);   

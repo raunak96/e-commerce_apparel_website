@@ -87,4 +87,13 @@ export const getShopData =collectionSnapshots=>{
     },{});
 }
 
+export const getUserinSession=()=>{
+    return new Promise((resolve,reject)=>{    
+        const unsubscribe= auth.onAuthStateChanged(userAuth=>{   //if we get userAuth resolve the promise else reject with error
+            unsubscribe();   //since we want result only once unsubscribe from onAuthStateChanged observer
+            resolve(userAuth);
+        },reject);
+    })
+}
+
 export default firebase;
