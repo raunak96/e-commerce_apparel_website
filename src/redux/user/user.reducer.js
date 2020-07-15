@@ -1,6 +1,6 @@
 import UserActionTypes from "./user.types";
 
-const INITIAL_STATE = { currentUser: null, errors: null };
+const INITIAL_STATE = { currentUser: null, error: null };
 
 
 // IT WILL BASICALLY RETURN THE STATE OBJECT
@@ -8,13 +8,16 @@ const INITIAL_STATE = { currentUser: null, errors: null };
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case UserActionTypes.SIGN_IN_SUCCESS:
+        case UserActionTypes.SIGN_OUT_SUCCESS:
             return {
                 ...state,                                   
                 currentUser: action.payload,
-                errors:null
+                error:null
             };
         case UserActionTypes.SIGN_IN_FAILURE:
-            return { ...state, errors: action.payload }
+        case UserActionTypes.SIGN_OUT_FAILURE:
+        case UserActionTypes.SIGN_UP_FAILURE:
+            return { ...state, error: action.payload }
         default:
             return state;
     }

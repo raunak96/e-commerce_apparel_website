@@ -4,13 +4,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## ADDED REDUX_SAGAS TO OUR APP
 * We just added redux-saga into our application! The first thing we did is to convert our fetchCollectionsStartAsync thunk method into a saga instead to fetch our collections. We added a root-saga which takes all sagas(actions/events) we want our sagas-middleware to listen to. For now we only have the shop
 Sagas to get Collections from firestore as soon as it sees that action FETCH_COLLECTIONS_START has been dispatched(which happens as soon as shop-page mounts).
-![Architecture1](not_project_related/fetchCollection_with_sagas.png)
 
+![Architecture1](not_project_related/fetchCollection_with_sagas.png)
 * We also added sign-in/sign-up feature to redux using redux-sagas which listens for start of said action and then fetches required data(which is async);
 ![Architecture2](not_project_related/sign-in_up_using_sagas.png) 
 
 * Added persistence to sign-in feature.As soon as APP component mounts, an action called CHECK_USER_IN_SESSION is dispatched which is intercepted by redux-saga which then uses firebase utils to check if any user is present in session using auth.onAuthStateChanged and if so currentUser is set by dispatching action SIGN_IN_SUCCESS.  
-
+  
+* We added sign-out feature to redux using sagas similar to above actions i.e clicking SIGN-OUT button dispatches an action '**SIGN_OUT_START**' which is intercepted by user-sagas which then performs the async function to sign out user, which if successful dispatches '**SIGN_OUT_SUCCESS**' and on failure calls '**SIGN_OUT_FAILURE**.If **SIGN_OUT_SUCCESS** was dispatched, currentUser in redux store is set to NULL. Apart from this, cart sagas also listens to this action(sign-out-successful) and then dispatches '**CLEAR_CART**' action to clear the cart if user signed out.
+  
+* We also added the sign-up feature to redux using sagas. Clicking Sign-up button triggers '**SIGN_UP_START**' after which saga signs-up the user which if successful dispatches '**SIGN_UP_SUCCESS**' action which is again intercepted by user-sagas which then dispatches the action '**SIGN_IN_SUCCESS**'.
+  
 ## REDUX
 
 #### REDUX-WORKING

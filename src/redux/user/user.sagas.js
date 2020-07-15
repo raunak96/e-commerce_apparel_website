@@ -1,11 +1,11 @@
 import {call,takeLatest,put,all} from 'redux-saga/effects';
 import UserActionTypes from './user.types';
 import {googleProvider, auth, createUserProfileDocument, getUserinSession} from "../../firebase/firebase.utils";
-import { signInSuccess,signInFailure } from './user.actions';
+import { signInSuccess,signInFailure, signOutFailure, signOutSuccess, signUpFailure, signUpSuccess } from './user.actions';
 
-function* getUserSnapShotFromUserAuth(user){
+function* getUserSnapShotFromUserAuth(user,additionalData){
     try {
-        const userRef= yield call(createUserProfileDocument,user);
+        const userRef= yield call(createUserProfileDocument,user,additionalData);
         const userSnapshot= yield userRef.get();
         yield put(signInSuccess({id:userSnapshot.id,...userSnapshot.data()}));
     } catch (error) {
@@ -41,6 +41,27 @@ export function* onEamilSignInStart(){
     yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START,signInWithEmail);
 }
 
+//SIGNUP LOGIC
+export function* signUp({payload: { email,password,displayName }}){
+    try {
+        const {user}= yield auth.createUserWithEmailAndPassword(email, password);
+        yield put(signUpSuccess({ user, additionalData: { displayName } }));
+    } catch (error) {
+        yield put(signUpFailure(error.message));
+    }
+}
+export function* onSignUpStart(){
+    yield takeLatest(UserActionTypes.SIGN_UP_START,signUp);
+}
+
+// LOGIC TO SIGN IN AFTER SIGN-UP SUCCESSFUL
+export function* signInAfterSignUp({payload:{user,additionalData}}){
+    yield getUserSnapShotFromUserAuth(user,additionalData);
+}
+export function* onSignUpSuccess(){
+    yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS,signInAfterSignUp);
+}
+
 // CHECKS USER IN SESSION when action CHECK_USER_IN_SESSION is dispatched which happens as soon as APP component is mounted
 export function* isUserInSession(){
     try {
@@ -52,11 +73,24 @@ export function* isUserInSession(){
         yield put(signInFailure);
     }
 }
-
 export function* onCheckUserInSesion(){
     yield takeLatest(UserActionTypes.CHECK_USER_IN_SESSION,isUserInSession)
 }
 
+// SIGNS OUT USER When signOut btn clicked and SIGN_OUT_START action dispatched
+export function* signOut(){
+    try {
+        yield auth.signOut();
+        yield put(signOutSuccess());
+    } catch (error) {
+        yield put(signOutFailure(error.message));
+    }
+}
+export function* onSignOutStart(){
+    yield takeLatest(UserActionTypes.SIGN_OUT_START,signOut);
+}
+
+// All above sagas combined to form USER-SAGAS
 export default function* UserSagas(){
-    yield all([call(onGoogleSignInStart),call(onEamilSignInStart),call(onCheckUserInSesion)]);
+    yield all([call(onGoogleSignInStart),call(onEamilSignInStart),call(onCheckUserInSesion),call(onSignOutStart),call(onSignUpStart),call(onSignUpSuccess)]);
 }

@@ -1,4 +1,4 @@
-import {call,put,takeLatest} from 'redux-saga/effects';  // listens to every action of the type mentioned in its param
+import {call,put,takeLatest,all} from 'redux-saga/effects';  // listens to every action of the type mentioned in its param
 import ShopActionTypes from "./shop.types";
 import {getShopData,firestore} from "../../firebase/firebase.utils";
 import {fetchCollectionsFailure,fetchCollectionsSuccess} from "./shop.actions";
@@ -30,4 +30,8 @@ export function* onFetchCollectionsStart(){
 
     // TakeLatest-if above action fired multiple times and previous ones still not finished, then cancel all previous ones and take only the latest action
     // In our case this is perfect as we want most up-to-date data 
+}
+
+export default function* ShopSagas(){
+    yield all([call(onFetchCollectionsStart)]);
 }
