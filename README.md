@@ -33,13 +33,17 @@ To summarize, Redux-saga has listeners for events using take,takeEvery and takeL
 
 ## REACT_HOOKS
 *Hooks are a new addition in React 16.8. They let you use state and other React features without writing a class.*
+
 ### Two main type of Hooks:
+1. useState()-> mimicks state and setState.. eg: const [ stateName,setStateMethodName ]= useState('Mary') this will make a state with initial value Mary which can be changed as: setStateMethodName('New-Value'). [Example Code](https://github.com/raunak96/React_hooks/blob/8835111260/src/components/use-state-example/use-state-example.component.jsx)
+2. useEffect()-> The Effect Hook lets you perform side effects in function components and can be used as componentDidMount, componentDidUpdate, and componentWillUnmount combined. [Example Code](https://github.com/raunak96/React_hooks/blob/8835111260/src/components/use-effect-example/use-effect-example.component.jsx)
+![useEffectCheatSheet](not_project_related/useEffect_cheat_sheet.png) 
 
-1. useState()-> mimicks state and setState.. eg: const [ stateName,setStateMethodName ]= useState('Mary') this will make a state with initial value Mary which can be changed as: setStateMethodName('New-Value').
-2. useEffect()-> The Effect Hook lets you perform side effects in function components and can be used as componentDidMount, componentDidUpdate, and componentWillUnmount combined.
-![useEffectCheatSheet](not_project_related/useEffect_cheat_sheet.png)
-
-
+### Some other Important Hooks
+1. useContext()-> Not needed for our App now.
+2. useReducer()-> This react native way of local state management whose scope is a Component it is used in. Its syntax is similar to redux but unlike redux it is not a global store and mostly suited for smaller Apps whose state logic is a bit complicated to use useState() hook so useReducer() replaces useState() hook. [Example Code](https://github.com/raunak96/React_hooks/blob/8835111260/src/components/use-reducer-example/use-reducer-example.component.jsx)
+3. customHooks()-> Our custom hooks generally written with purpose for reusing it in multiple components and made using above Hooks like useState, useEffect. Naming convention states fn name to start with 'use'. [Example Code](https://github.com/raunak96/React_hooks/blob/8835111260/src/effects/use-fetch.effect.js)
+ 
 ## Previous Changes
 
 *  Moved responsibility of HOC wrapping of Collection and CollectionsOverview Pages from Shop to above Components itself by making new Container files for the 2 components whose job is to render actual Component or Loading Spinner according to condition by wrapping to WithSpinner HOC.
