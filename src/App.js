@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 
@@ -13,24 +13,24 @@ import {createStructuredSelector} from 'reselect';
 import { selectCurrentUser } from "./redux/user/user.selectors";
 import { checkUserInSession } from "./redux/user/user.actions";
 
-class App extends React.Component {
-    componentDidMount() {
-        const {checkUserInSession}=this.props;
+const App=({currentUser,checkUserInSession})=>  {
+
+    useEffect(()=>{          // this runs everytime this Component renders
         checkUserInSession();
-    }
-    render() {
-        return (
-            <div>
-                <Header/>
-                <Switch>
-                    <Route exact={true} path="/signin" render={()=> this.props.currentUser ?(<Redirect to="/" />) :(<AuthPage/>)}></Route>
-                    <Route exact={true} path="/" component={Homepage}></Route>
-                    <Route path="/shop" component={ShopPage}></Route>
-                    <Route exact={true} path="/checkout" component={checkoutPage}></Route>
-                </Switch>
-            </div>
-        );
-    }
+    },[checkUserInSession]);   // this 2nd param tells useEffect to run only when any element in this array changes.Since checkUserInSession is a function
+    //obtained from mapDispatchToProps and never changes, useEffect runs only 1st time exactly like ComponentDidMount
+
+    return (
+        <div>
+            <Header/>
+            <Switch>
+                <Route exact={true} path="/signin" render={()=> currentUser ?(<Redirect to="/" />) :(<AuthPage/>)}></Route>
+                <Route exact={true} path="/" component={Homepage}></Route>
+                <Route path="/shop" component={ShopPage}></Route>
+                <Route exact={true} path="/checkout" component={checkoutPage}></Route>
+            </Switch>
+        </div>
+    );
 }
 
 const mapStateToProps= createStructuredSelector({

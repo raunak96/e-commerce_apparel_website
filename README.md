@@ -4,6 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## ADDED REACT HOOKS TO SOME COMPONENTS of our APP
 
 * Converted the **SIGN-IN** and **SIGN-UP** components to functional component and added and updated state using **useState() Hook**. 
+* Converted the **APP** and **ShopPage** components to funtional component and added **useEffect() Hook** to mimic componentDidMount used previously.
   
 ## REDUX
 
@@ -32,6 +33,12 @@ To summarize, Redux-saga has listeners for events using take,takeEvery and takeL
 
 ## REACT_HOOKS
 *Hooks are a new addition in React 16.8. They let you use state and other React features without writing a class.*
+### Two main type of Hooks:
+
+1. useState()-> mimicks state and setState.. eg: const [ stateName,setStateMethodName ]= useState('Mary') this will make a state with initial value Mary which can be changed as: setStateMethodName('New-Value').
+2. useEffect()-> The Effect Hook lets you perform side effects in function components and can be used as componentDidMount, componentDidUpdate, and componentWillUnmount combined.
+![useEffectCheatSheet](not_project_related/useEffect_cheat_sheet.png)
+
 
 ## Previous Changes
 
