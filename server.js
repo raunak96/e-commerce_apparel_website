@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(cors());
 
-if(process.NODE_ENV== 'production'){
+if(process.env.NODE_ENV== 'production'){
     // basically it tells express app to serve all static files from curr_dir/client/build (Our react app in production is present in build folder after it is built an then this folder is deployed )
     app.use(express.static(path.join(__dirname,'client/build'))); 
 
