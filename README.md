@@ -58,7 +58,7 @@ Now Shop's page only role is to route to CollectionPage or CollectionsOverview P
   ![Architecture1](client/not_project_related/fetchCollection_with_sagas.png)
 
   - We also added sign-in feature to redux using redux-sagas which listens for start of said action and then fetches required data(which is async).
-    ![Architecture2](not_project_related/sign-in_up_using_sagas.png)
+    ![Architecture2](client/not_project_related/sign-in_up_using_sagas.png)
 
   - Added persistence to sign-in feature.As soon as APP component mounts, an action called CHECK_USER_IN_SESSION is dispatched which is intercepted by redux-saga which then uses firebase utils to check if any user is present in session using auth.onAuthStateChanged and if so currentUser is set by dispatching action SIGN_IN_SUCCESS.
 
