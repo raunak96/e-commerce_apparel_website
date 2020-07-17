@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Set up a Simple Node server with /payment route that creates charge for stripe payment done in front-end and send this data to stripe for verification and if successful then payment successfully completes. For real payment just activate Stripe Account.
 - In heroku no need of 2 deployments for client and server. Just server is deployed and in server.js, we have included how react(front-end) can be included from index.html in build folder.
 - React code has been moved to client folder while server code in root in server.js file.
-[Stripe-Payment Steps Involved](client/not_project_related/stripe-payment-working.png)
+![Stripe-Payment Steps Involved](client/not_project_related/stripe-payment-working.png)
   
 ## REDUX
 
