@@ -1,10 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 # Current Changes
+- Set up a Simple Node server with /payment route that creates charge for stripe payment done in front-end and send this data to stripe for verification and if successful then payment successfully completes. For real payment just activate Stripe Account.
+- In heroku no need of 2 deployments for client and server. Just server is deployed and in server.js, we have included how react(front-end) can be included from index.html in build folder.
+- React code has been moved to client folder while server code in root in server.js file.
 
-## ADDED REACT HOOKS TO SOME COMPONENTS of our APP
-
-* Converted the **SIGN-IN** and **SIGN-UP** components to functional component and added and updated state using **useState() Hook**. 
-* Converted the **APP** and **ShopPage** components to funtional component and added **useEffect() Hook** to mimic componentDidMount used previously.
   
 ## REDUX
 
@@ -66,4 +65,10 @@ Now Shop's page only role is to route to CollectionPage or CollectionsOverview P
   - We added sign-out feature to redux using sagas similar to above actions i.e clicking SIGN-OUT button dispatches an action '**SIGN_OUT_START**' which is intercepted by user-sagas which then performs the async function to sign out user, which if successful dispatches '**SIGN_OUT_SUCCESS**' and on failure calls '**SIGN_OUT_FAILURE**.If **SIGN_OUT_SUCCESS** was dispatched, currentUser in redux store is set to NULL. Apart from this, cart sagas also listens to this action(sign-out-successful) and then dispatches '**CLEAR_CART**' action to clear the cart if user signed out.
 
   - We also added the sign-up feature to redux using sagas. Clicking Sign-up button triggers '**SIGN_UP_START**' after which saga signs-up the user which if successful dispatches '**SIGN_UP_SUCCESS**' action which is again intercepted by user-sagas which then dispatches the action '**SIGN_IN_SUCCESS**'.
+
+## ADDED REACT HOOKS TO SOME COMPONENTS of our APP
+
+- Converted the **SIGN-IN** and **SIGN-UP** components to functional component and added and updated state using **useState() Hook**.
+- Converted the **APP** and **ShopPage** components to funtional component and added **useEffect() Hook** to mimic componentDidMount used previously.
+
 
