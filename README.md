@@ -8,10 +8,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## REDUX
 
 #### REDUX-WORKING
-![Redux-Working](not_project_related/redux-working.png)
+![Redux-Working](client/not_project_related/redux-working.png)
 
 #### REDUX WITH MIDDLEWARES
-![Middlewares with Redux](not_project_related/redux-working-with-middlewares.png)
+![Middlewares with Redux](client/not_project_related/redux-working-with-middlewares.png)
 
 
 ## Redux-thunk
@@ -36,7 +36,7 @@ To summarize, Redux-saga has listeners for events using take,takeEvery and takeL
 ### Two main type of Hooks:
 1. useState()-> mimicks state and setState.. eg: const [ stateName,setStateMethodName ]= useState('Mary') this will make a state with initial value Mary which can be changed as: setStateMethodName('New-Value'). [Example Code](https://github.com/raunak96/React_hooks/blob/8835111260/src/components/use-state-example/use-state-example.component.jsx)
 2. useEffect()-> The Effect Hook lets you perform side effects in function components and can be used as componentDidMount, componentDidUpdate, and componentWillUnmount combined. [Example Code](https://github.com/raunak96/React_hooks/blob/8835111260/src/components/use-effect-example/use-effect-example.component.jsx)
-![useEffectCheatSheet](not_project_related/useEffect_cheat_sheet.png) 
+![useEffectCheatSheet](client/not_project_related/useEffect_cheat_sheet.png) 
 
 ### Some other Important Hooks
 1. useContext()-> Not needed for our App now.
@@ -55,7 +55,7 @@ Now Shop's page only role is to route to CollectionPage or CollectionsOverview P
   - We just added redux-saga into our application! The first thing we did is to convert our fetchCollectionsStartAsync thunk method into a saga instead to fetch our collections. We added a root-saga which takes all sagas(actions/events) we want our sagas-middleware to listen to. For now we only have the shop
     Sagas to get Collections from firestore as soon as it sees that action FETCH_COLLECTIONS_START has been dispatched(which happens as soon as shop-page mounts).
 
-  ![Architecture1](not_project_related/fetchCollection_with_sagas.png)
+  ![Architecture1](client/not_project_related/fetchCollection_with_sagas.png)
 
   - We also added sign-in feature to redux using redux-sagas which listens for start of said action and then fetches required data(which is async).
     ![Architecture2](not_project_related/sign-in_up_using_sagas.png)
