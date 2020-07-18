@@ -5,8 +5,9 @@ import {selectCartItems,selectCartTotalPrice} from "../../redux/cart/cart.select
 import { connect } from 'react-redux';
 import CheckoutItem from '../../components/checkout-item/checkout-item.components';
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-const CheckoutPage = ({ cartItems, cartTotalPrice }) => (
+const CheckoutPage = ({ cartItems, cartTotalPrice, currentUser }) => (
     <div className="checkout-page">
         <div className="checkout-header">
             <div className="header-block">
@@ -36,13 +37,20 @@ const CheckoutPage = ({ cartItems, cartTotalPrice }) => (
             <br />
             4242 4242 4242 4242 - Exp: Any future date - CVV: Any 3 digit no
         </div>
-        <StripeCheckoutButton price={cartTotalPrice} />
+        {currentUser ? (
+            <StripeCheckoutButton price={cartTotalPrice} />
+        ) : (
+            <div>
+                <h2>Sign In To Shop</h2>
+            </div>
+        )}
     </div>
 );
 
 const mapStateToProps=createStructuredSelector({
     cartItems: selectCartItems,
-    cartTotalPrice: selectCartTotalPrice
+    cartTotalPrice: selectCartTotalPrice,
+    currentUser: selectCurrentUser
 })
 
 export default connect(mapStateToProps)(CheckoutPage);

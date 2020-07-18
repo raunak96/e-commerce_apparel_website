@@ -3,8 +3,10 @@ import "./collection-item.styles.scss";
 import CustomButton from "../custom-button/custom-button.component";
 import { connect } from "react-redux";
 import { addItem } from "../../redux/cart/cart.actions";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 
-const CollectionItem = ({item,addItem}) => {
+const CollectionItem = ({item,addItem,currentUser}) => {
     const { name, price, imageUrl } = item;
     return (
         <div className="collection-item">
@@ -15,9 +17,12 @@ const CollectionItem = ({item,addItem}) => {
                     backgroundImage: `url(${imageUrl})`,
                 }}
             >
-                <CustomButton className="custom-button" inverted onClick={() => addItem(item)}>
+            {
+                currentUser?(<CustomButton className="custom-button" inverted onClick={() => addItem(item)}>
                     Add to cart
-                </CustomButton>
+                </CustomButton>):null
+            }
+                
             </div>
             <div className="collection-footer">
                 <span className="name">{name}</span>
@@ -26,9 +31,12 @@ const CollectionItem = ({item,addItem}) => {
         </div>
     );
 };
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+})
 
 const mapDispatchToProps = (dispatch) => ({
     addItem: (item) => dispatch(addItem(item))
 });
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionItem);
