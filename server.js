@@ -9,7 +9,7 @@ if(process.env.NODE_ENV !== 'production')
 
 const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const PORT=process.env.PORT || 8000;
+const PORT=process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));

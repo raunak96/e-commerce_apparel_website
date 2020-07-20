@@ -8,12 +8,18 @@
     }
 
     .items {
-        display: grid;
-        grid-template-columns: repeat(4,1fr);
-        grid-gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
-        & .collection-item {
+        @media screen and (max-width: 560px) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .collection-item {
             margin-bottom: 30px;
+
         }
     }
 }

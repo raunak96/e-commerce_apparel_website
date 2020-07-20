@@ -39,17 +39,18 @@ const getButtonStyles=props=> props.isGoogleSignIn? googleSignInStyles : props.i
 
 export const CustomButtonContainer = styled.button`
     min-width: 165px;
-    width: auto;
+    width: 100%;
     height: 50px;
     letter-spacing: 0.5px;
     line-height: 50px;
-    padding: 0 35px 0 35px;
+    padding: 0 auto;
     font-size: 15px;
     text-transform: uppercase;
     font-family: "Open Sans Condensed";
     font-weight: bolder;
     border: none;
     cursor: pointer;
+    margin-bottom:10px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -7,10 +7,18 @@
   justify-content: center;
   cursor: pointer;
 
+  @media screen and (max-width:560px){
+        width: 100vw;
+    }
+
   .shopping-icon {
     width: auto;
     height: 70%;
     margin-bottom: 10px;
+
+    @media screen and (max-width:800px){
+        height: 100%;
+    }
   }
 
   .item-count {

@@ -11,6 +11,11 @@
     right: 40px;
     z-index: 5;
 
+    @media screen and (max-width:560px){
+        position: unset;
+        top:unset;
+    }
+
     .empty-message{
         font-size: 2em;
         margin: auto

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import "./App.css";
+
+import {GlobalStyle} from "./global.styles";
 
 import Homepage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -13,6 +14,8 @@ import {createStructuredSelector} from 'reselect';
 import { selectCurrentUser } from "./redux/user/user.selectors";
 import { checkUserInSession } from "./redux/user/user.actions";
 
+
+
 const App=({currentUser,checkUserInSession})=>  {
 
     useEffect(()=>{          // this runs everytime this Component renders
@@ -22,6 +25,7 @@ const App=({currentUser,checkUserInSession})=>  {
 
     return (
         <div>
+            <GlobalStyle />
             <Header/>
             <Switch>
                 <Route exact={true} path="/signin" render={()=> currentUser ?(<Redirect to="/" />) :(<AuthPage/>)}></Route>

@@ -9,22 +9,52 @@ export const HeaderContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+
+    @media screen and (max-width:800px){
+        height: 60px;
+        padding:10px;
+        margin-bottom:20px;
+    }
+    @media screen and (max-width:560px){
+        flex-direction:column;
+        justify-content:space-between;
+        align-items: center;
+        height:auto;
+        position:relative;
+
+    }
 `;
 
 export const LogoContainer = styled(Link)`
     height: 100%;
-    width: 20vw;
+    width: 40vw;
     padding: 25px;
     display: flex;
     align-items: center;
+
+    @media screen and (max-width:1000px){
+        padding:0;
+    }
+    @media screen and (max-width:560px){
+        width: 100vw;
+        align-items:unset;
+        justify-content:center;
+    }
 `;
 
 export const OptionsContainer = styled.div`
-    width: 50%;
+    width: 60vw;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+
+    @media screen and (max-width:560px){
+        width: 100vw;
+        flex-direction:column;
+        justify-content:space-between;
+    }
 `;
 export const OptionContainer = styled(Link)`
     padding: 10px 15px;
@@ -33,6 +63,9 @@ export const OptionContainer = styled(Link)`
 
 export const LogoIconContainer = styled(Logo)`
     height: 200%;
+    @media screen and (max-width:1000px){
+        height:100%;
+    }
 `;
 
 export const LogoNameContainer = styled.span`
