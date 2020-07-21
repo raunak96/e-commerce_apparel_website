@@ -62,9 +62,13 @@ export const OptionContainer = styled(Link)`
 `;
 
 export const LogoIconContainer = styled(Logo)`
-    height: 200%;
+    height: 50px;
+    width: auto;
     @media screen and (max-width:1000px){
-        height:100%;
+        height:40px;
+    }
+    @media screen and (max-width:560px){
+        height:30px;
     }
 `;
 
