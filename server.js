@@ -3,6 +3,7 @@ const app=express();
 const cors=require('cors');
 const bodyParser = require('body-parser');
 const path= require('path');
+const compression = require('compression'); // compresses all our static files which are then unzipped by client browser
 
 if(process.env.NODE_ENV !== 'production') 
     require('dotenv').config();
@@ -11,6 +12,7 @@ const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const PORT=process.env.PORT || 3001;
 
+app.use(compression());  // compresses all our static files which are then unzipped by client browser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
