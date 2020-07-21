@@ -4,6 +4,7 @@ const cors=require('cors');
 const bodyParser = require('body-parser');
 const path= require('path');
 const compression = require('compression'); // compresses all our static files which are then unzipped by client browser
+const enforce=require("express-sslify");
 
 if(process.env.NODE_ENV !== 'production') 
     require('dotenv').config();
@@ -22,10 +23,16 @@ if(process.env.NODE_ENV== 'production'){
     // basically it tells express app to serve all static files from curr_dir/client/build (Our react app in production is present in build folder after it is built an then this folder is deployed )
     app.use(express.static(path.join(__dirname,'client/build'))); 
 
+    app.use(enforce.HTTPS({ trustProtoHeader: true }));  // if anyone makes http request automatically redirected to HTTPS
+
     app.get("*",(req,res)=>{
         res.sendFile(path.join(__dirname,"client/build","index.html"));  // if we get a GET request at any API(*) then send index.html file which contains our React Code(root Component)
     });
 }
+
+app.get("/service-worker.js", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "..", "build", "service-worker.js"));
+});
 
 app.post("/payment",(req,res)=>{
     const body={
