@@ -1,10 +1,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 # Current Changes
-- Set up a Simple Node server with /payment route that creates charge for stripe payment done in front-end and send this data to stripe for verification and if successful then payment successfully completes. For real payment just activate Stripe Account.
-- In heroku no need of 2 deployments for client and server. Just server is deployed and in server.js, we have included how react(front-end) can be included from index.html in build folder.
-- React code has been moved to client folder while server code in root in server.js file.
-![Stripe-Payment Steps Involved](client/not_project_related/stripe-payment-working.png)
-  
+
+- Most React apps will have their files “bundled” using tools like Webpack etc. Bundling is the process of following imported files and merging them into a single file: a “bundle”. This bundle can then be included on a webpage to load an entire app at once. This ensures good speed after initial loading. However, if our app becomes large, bundle also increases leading increase in initial load time dramatically. Chunks are used to make bundles of our code.
+- Solution is splitting the code which can create multiple bundles that can be dynamically loaded at runtime.
+Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app. While you haven’t reduced the overall amount of code in your app, you’ve avoided loading code that the user may never need, and reduced the amount of code needed during the initial load.
+  -  This is done by using dynamic imports which can be done using **React.lazy**. React.lazy takes a function that must call a dynamic import(). This must return a Promise which resolves to a module with a default export containing a React component.
+  -  The lazy component should then be rendered inside a **Suspense** component, which allows us to show some fallback content (such as a loading indicator or a Component showing our page is Loading) while we’re waiting for the lazy component to load. [Code](client/src/App.js)
+  -  A good place to start splitting is with **routes**. Most people on the web are used to page transitions taking some amount of time to load. You also tend to be re-rendering the entire page at once so your users are unlikely to be interacting with other elements on the page at the same time.(like we have done in **APP and SHOPPAGE COMPONENTS**).
+   
 ## REDUX
 
 #### REDUX-WORKING
@@ -70,5 +73,15 @@ Now Shop's page only role is to route to CollectionPage or CollectionsOverview P
 
 - Converted the **SIGN-IN** and **SIGN-UP** components to functional component and added and updated state using **useState() Hook**.
 - Converted the **APP** and **ShopPage** components to funtional component and added **useEffect() Hook** to mimic componentDidMount used previously.
+
+## SETTING UP STRIPE PAYMENT CHARGE THROUGH NODE BACKEND
+- Set up a Simple Node server with /payment route that creates charge for stripe payment done in front-end and send this data to stripe for verification and if successful then payment successfully completes. For real payment just activate Stripe Account.
+- In heroku no need of 2 deployments for client and server. Just server is deployed and in server.js, we have included how react(front-end) can be included from index.html in build folder.
+- React code has been moved to client folder while server code in root in server.js file.
+![Stripe-Payment Steps Involved](client/not_project_related/stripe-payment-working.png)
+
+## MAKING UP MOBILE RESPONSIVE USING @media queries in CSS
+
+
 
 
