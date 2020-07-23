@@ -1,26 +1,20 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 # Current Changes
 
-## OPTIMISATIONS
+## ADDED CARTS COLLECTION TO FIRESTORE
+- Each **document** in **carts collection is an object containg userId whose cartItems it is and CartItems array**.
+- Whenever user sign-in is successful, this action is intercepted by [cart-saga](client/src/redux/cart/cart.sagas.js), which then asynchronously retrieves cartItems array from **firestore** and if successful cartItems array is updated in redux-store to display in front-end by dispatching an action.
+- Whenever user **adds/removes/clears/checks-out successfully**(which leads to clearing cart), the respective actions which are dispatched are also intercepted by cart-saga which then asynchronously updates the cartItems array for that user in firestore db(These actions are also handled by redux and redux changes cartItems array in redux-store accordingly and updates cart State with reducer. However, it's important to note that when an action is dispatched to the store, the middleware first forwards the action to the reducers and then notifies the Sagas. This means that when you query the Store's State, you get the State after the action has been applied.).
 
-### REACT LAZY (CODE SPLITTING)
-- Most React apps will have their files “bundled” using tools like Webpack etc. Bundling is the process of following imported files and merging them into a single file: a “bundle”. This bundle can then be included on a webpage to load an entire app at once. This ensures good speed after initial loading. However, if our app becomes large, bundle also increases leading increase in initial load time dramatically. Chunks are used to make bundles of our code.
-- Solution is splitting the code which can create multiple bundles that can be dynamically loaded at runtime.
-Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app. While you haven’t reduced the overall amount of code in your app, you’ve avoided loading code that the user may never need, and reduced the amount of code needed during the initial load.
-  -  This is done by using dynamic imports which can be done using **React.lazy**. React.lazy takes a function that must call a dynamic import(). This must return a Promise which resolves to a module with a default export containing a React component.
-  -  The lazy component should then be rendered inside a **Suspense** component, which allows us to show some fallback content (such as a loading indicator or a Component showing our page is Loading) while we’re waiting for the lazy component to load. [Code](client/src/App.js)
-  -  A good place to start splitting is with **routes**. Most people on the web are used to page transitions taking some amount of time to load. You also tend to be re-rendering the entire page at once so your users are unlikely to be interacting with other elements on the page at the same time.(like we have done in **APP and SHOPPAGE COMPONENTS**).
+## MADE FIREBASE DB(FIRESTORE SECURE) BY ADDING RULES(PERMISSIONS) FOR AUTHORISATION
+- Added Following rules to our **users**, **collections** and **carts** collection in firestore db to prevent unauthorised access. 
+![Rules](client/not_project_related/firestore_rules.png)
+  - For **users**, one can get/write userDoc only if they are authenticated and authenticated user id matches the user id one is trying to get/write.
+  - For **collections**, anyone can **read** as we are allowing even unauthenticated users to view our collections. However, **write**(create/update/delete) is only allowed if the current user is authenticated and his id matches the admin's.
+  - For **carts**, as long as user is authenticated he/she can **create** a cart document in carts Collection. For **read/update**, there is additional condition that user's id should match cartDoc's userId.
 
-### ERROR BOUNDARY (IF SOME COMPONENT FAILED TO LOAD DUE NETWORK ERROR, GO TO A FALLBACK UI/PAGE INSTEAD OF UGLY STACKTRACE MSG )
-- A class component becomes an error boundary if it defines either (or both) of the lifecycle methods static getDerivedStateFromError() or componentDidCatch(). Use static getDerivedStateFromError() to render a fallback UI after an error has been thrown. Use componentDidCatch() to log error information.
-- Thus, we made a component called [error-boundary](client/src/components/error-boundary/error-boundary.component.jsx) which if error occurs renders the component described in it.
-
-### COMPONENT MEMOISATION USING React.memo(<name-of-fn-component>) TO PREVENT CHILD COMPONENT FROM RE-RENDERING IF ITS STATE/PROPS DO NOT CHANGE IF PARENT RE-RENDERS
-- We did this for **cart-item** which is a child of **cart-dropdown** component. Whenever a cart-item is added/removed from cart, cartItems[] changes and since it is a prop of cart-dropdown, it is re-rendered. Without memo, even cart-item which were already present in cart gets re-rendered as its parent was re-rendered(It renders cart-item for each item in cart-items). 
-- To prevent this, we **memoize cart-item** so that only if **item prop** of cart-item has changed, is it re-rendered. [Code](client/src/components/cart-item/cart-item.component.jsx).
-
-*Note: IF Component is class Component extend PureComponent to memoise.*
    
+# IMPORTANT REACT AND REALTED TOOLS     
 ## REDUX
 
 #### REDUX-WORKING
@@ -94,6 +88,30 @@ Now Shop's page only role is to route to CollectionPage or CollectionsOverview P
 ![Stripe-Payment Steps Involved](client/not_project_related/stripe-payment-working.png)
 
 ## MAKING UP MOBILE RESPONSIVE USING @media queries in CSS
+
+## OPTIMISATIONS
+
+### REACT LAZY (CODE SPLITTING)
+
+- Most React apps will have their files “bundled” using tools like Webpack etc. Bundling is the process of following imported files and merging them into a single file: a “bundle”. This bundle can then be included on a webpage to load an entire app at once. This ensures good speed after initial loading. However, if our app becomes large, bundle also increases leading increase in initial load time dramatically. Chunks are used to make bundles of our code.
+- Solution is splitting the code which can create multiple bundles that can be dynamically loaded at runtime.
+  Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app. While you haven’t reduced the overall amount of code in your app, you’ve avoided loading code that the user may never need, and reduced the amount of code needed during the initial load.
+  - This is done by using dynamic imports which can be done using **React.lazy**. React.lazy takes a function that must call a dynamic import(). This must return a Promise which resolves to a module with a default export containing a React component.
+  - The lazy component should then be rendered inside a **Suspense** component, which allows us to show some fallback content (such as a loading indicator or a Component showing our page is Loading) while we’re waiting for the lazy component to load. [Code](client/src/App.js)
+  - A good place to start splitting is with **routes**. Most people on the web are used to page transitions taking some amount of time to load. You also tend to be re-rendering the entire page at once so your users are unlikely to be interacting with other elements on the page at the same time.(like we have done in **APP and SHOPPAGE COMPONENTS**).
+
+### ERROR BOUNDARY (IF SOME COMPONENT FAILED TO LOAD DUE NETWORK ERROR, GO TO A FALLBACK UI/PAGE INSTEAD OF UGLY STACKTRACE MSG )
+
+- A class component becomes an error boundary if it defines either (or both) of the lifecycle methods static getDerivedStateFromError() or componentDidCatch(). Use static getDerivedStateFromError() to render a fallback UI after an error has been thrown. Use componentDidCatch() to log error information.
+- Thus, we made a component called [error-boundary](client/src/components/error-boundary/error-boundary.component.jsx) which if error occurs renders the component described in it.
+
+### COMPONENT MEMOISATION USING React.memo(<name-of-fn-component>) TO PREVENT CHILD COMPONENT FROM RE-RENDERING IF ITS STATE/PROPS DO NOT CHANGE IF PARENT RE-RENDERS
+
+- We did this for **cart-item** which is a child of **cart-dropdown** component. Whenever a cart-item is added/removed from cart, cartItems[] changes and since it is a prop of cart-dropdown, it is re-rendered. Without memo, even cart-item which were already present in cart gets re-rendered as its parent was re-rendered(It renders cart-item for each item in cart-items).
+- To prevent this, we **memoize cart-item** so that only if **item prop** of cart-item has changed, is it re-rendered. [Code](client/src/components/cart-item/cart-item.component.jsx).
+
+_Note: IF Component is class Component extend PureComponent to memoise._
+
 
 
 

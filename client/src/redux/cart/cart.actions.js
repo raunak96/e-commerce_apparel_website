@@ -1,24 +1,36 @@
-import { cartActionTypes } from "./cart.types";
+import { CartActionTypes } from "./cart.types";
 
 export const toggleCart = () => ({
-    type: cartActionTypes.TOGGLE_CART,
+    type: CartActionTypes.TOGGLE_CART,
 });
 
 export const addItem = (item) => ({
-    type: cartActionTypes.ADD_ITEM,
+    type: CartActionTypes.ADD_ITEM,
     payload: item,
 });
 
 export const clearCartItem = (item) => ({
-    type: cartActionTypes.CLEAR_ITEM,
+    type: CartActionTypes.CLEAR_ITEM,
     payload: item,
 });
 
 export const removeItem = (item) => ({
-    type: cartActionTypes.REMOVE_ITEM,
+    type: CartActionTypes.REMOVE_ITEM,
     payload: item,
 });
 
 export const clearCart=()=>({
-    type: cartActionTypes.CLEAR_CART
+    type: CartActionTypes.CLEAR_CART
+});
+
+export const setCartFromFirebase=(cartItems)=>({
+    type: CartActionTypes.SET_CART_FROM_FIREBASE,
+    payload: cartItems
+});
+export const updateCartInFirebase=()=>({
+    type: CartActionTypes.UPDATE_CART_IN_FIREBASE,
+});
+
+export const checkoutSuccess=()=>({
+    type: CartActionTypes.CHECKOUT_SUCCESS
 });

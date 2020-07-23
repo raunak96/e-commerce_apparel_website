@@ -96,4 +96,18 @@ export const getUserinSession=()=>{
     })
 }
 
+export const getCartDocRef= async (userId)=>{
+    const cartsRef = firestore.collection('carts').where('userId','==',userId); // this cartsCollRef will contain those docs which satisfy where clause
+    const cartSnapshot = await cartsRef.get();
+
+    if(cartSnapshot.empty){
+        const cartDocRef= firestore.collection('carts').doc();
+        await cartDocRef.set({userId,cartItems:[]});
+        return cartDocRef;
+    }
+    else {
+        return cartSnapshot.docs[0].ref;
+    }
+}
+
 export default firebase;

@@ -1,10 +1,10 @@
 import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import {connect} from 'react-redux';
-import { clearCart } from "../../redux/cart/cart.actions";
+import { checkoutSuccess } from "../../redux/cart/cart.actions";
 import axios from "axios";
 
-const StripeCheckoutButton = ({ price,clearEntireCart }) => {
+const StripeCheckoutButton = ({ price,checkoutSuccessful }) => {
     const priceInPaise = price * 100;
     const publishableKey = process.env.REACT_APP_PUBLISHABLE_KEY;
     
@@ -19,7 +19,7 @@ const StripeCheckoutButton = ({ price,clearEntireCart }) => {
                 },
             });
             alert("Payment Successful");
-            clearEntireCart();
+            checkoutSuccessful();
         } catch (error) {
             console.log('Payment Error: ',JSON.parse(error));
             alert("There was an issue with your payment. Please make sure you used the correct card.");
@@ -44,7 +44,7 @@ const StripeCheckoutButton = ({ price,clearEntireCart }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    clearEntireCart: () => dispatch(clearCart()),
+    checkoutSuccessful: () => dispatch(checkoutSuccess()),
 });
 
 export default connect(null,mapDispatchToProps)(StripeCheckoutButton);
